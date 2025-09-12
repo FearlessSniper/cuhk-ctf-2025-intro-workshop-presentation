@@ -39,7 +39,7 @@
 						### `web` stands for Web Exploitation
 
 						Note:
-						Assumes some kind of programming background.
+						This introduction assumes some kind of programming background. We won't go into too much detail of algorithms, so don't worry.
 						---
 						## `whoami`
 						- [**FearlessSniper**](https://github.com/FearlessSniper) (a.k.a. `F21endSh1p` on CTFTime)
@@ -47,35 +47,33 @@
 						- Specialising in `pwn` (Binary Exploitation) and `web` (Web Exploitation)
 						- Never have enough time to play CTFs
 						---
-						## What is web?
-						- Web exploitation is the exploitation of web applications
+						## What is `web`?
+						- Web exploitation is the *exploitation of web applications*
 						- Wikipedia: *A web application (or web app) is application software that is created with web technologies and runs via a web browser.*
+
+						Note:
+						So any kind of application that is accessible via a web browser is a web application.
 						---
 						## The *de-facto* web application architecture
 						The simplest form of web application:
 						[![Simple web application setup diagram](./webapp.png)](https://www.zealousys.com/wp-content/uploads/2024/01/Layers-of-Web-App-Architecture.webp)
 						
 						Note:
-						This is the one of the simplest setup for a web application. As companies need to scale up their software, more individual components may appear.
+						This is the one of the simplest setup for a web application, with a client and server. As companies need to scale up their software, more individual components may appear.
 						
-						There is a client, server and a database. Each has its own possible bugs (i.e. attack surface), as we will see later.
+						There is a client, server and a database. Each has its own possible bugs, and thus opens a new attack surface, as we will see later.
 						---
 						### The *slightly more complex* web application architecture
 						[![Simple web application setup diagram](./complex-webapp.png)](https://litslink.com/wp-content/uploads/2021/04/Web_Application_Architecture_Diagram__diagram_.png)
 						---
-						## HTTP: Hypertext Transfter Protocol
+						## HTTP: Hypertext Transfer Protocol
 						- URL: A string indicating the thing that you want to look at
 						- Request method: Hints the server of what you want to do in each request
 						- **Stateless**: Server forgets who you are after each request. You should provide proof for your identity.
-						---
-						## Code of Ethics
-						The exercises in this session should be attempted ONLY INSIDE THE SECLUDED LAB ENVIRONMENT documented or provided. Please note that most of the attacks described in the slides would be ILLEGAL if attempted on machines that you do not explicit permission to test and attack. You should bear responsibilities for any actions performed outside the secluded lab.
-						---
-						## Code of Ethics
-						The challenge server should be regarded as a hostile environment. You should not use your real information when attempting challenges.
-						---
-						## Code of Ethics
-						Do not intentionally disrupt other students who are working on the challenges or disclose private information you found on the challenge server (e.g. IP address of other students). Please let us know if you accidentally broke the challenge.
+
+						Note:
+						Stateless design of HTTP leads to the need of a *token* to verify the identity of the client. Having such a token opens a
+						new attack vector, as attackers can steal this token to impersonate others. More on that later.
 						---
 						> Talk is cheap. Show me the code.
 
@@ -84,7 +82,7 @@
 						## Sample vulnerable web application
 						Demonstration with [@chemistrying](https://github.com/chemistrying)'s sample vulnerable web application  
 						Items/Skills/Vulnerabilities showcased:
-						- Reading network traffic / HTML
+						- Reading HTML & HTTP requests
 						- SQL Injection
 						- Common HTML endpoints
 						- XSS (Cross Site Scripting)
@@ -92,7 +90,16 @@
 						- RCE
 						Note:
 						I will not host the web application on the Internet this time, as the application will be defaced if everyone
-						uses it at the same time.
+						uses it at the same time... is what I thought, but I think it is more fun to have something that everyone can play
+						with
+						---
+						## Remote Server
+						Try out the web application here:  
+						https://webdemo.f21endsh1p.me  
+						The hosted web application is the same as the one last year.
+						
+						Note:
+						If you want to try out the vulnerabilities without being disturbed, you can also host your own server.
 						---
 						## Run the vulnerable server locally
 						1. Open terminal and clone the repository.
@@ -108,14 +115,14 @@
 						```sh
 						docker compose up -d
 						```
-						5. Web page is served on "http://localhost:23999".
+						5. Web app is served on "http://localhost:23999".
 						---
 						# Walkthrough:
 						# Exploiting the web app
 						---
 						## Onboarding: Poke around to see what it is doing
 						- Bootstrap feel (although usually not important)
-						- Login function --> Look for authentication bypasses
+						- Login function --> Can we bypass login?
 						- Forum feature --> Displays user input, might be vulnerable to XSS
 						---
 						## Poking around: Look at network traffic
@@ -162,7 +169,7 @@
 						---
 						## Scripting in HTML
 						To support interactive websites, HTML standard provides a way to load program code.  
-						By using the `&lt;script&gt;` tag, webpages can include *Javascript* code that controls the webpage.
+						By using the `&lt;script&gt;` tag, webpages can include Javascript code that controls the webpage.
 						---
 						## Cross Site Scripting
 						`&lt;script&gt;` tags can be used almost everywhere in the HTML document.
@@ -175,7 +182,7 @@
 						---
 						## Cross Site Scripting
 						This means that the attack can perform actions on behalf of the victim. Such as:
-						- Stealing victim's login (session, not password)
+						- Stealing victim's cookie => hijack login session, but **not password**
 						- Perform transactions on the same website
 						- Annoy the victim with pop up messages
 						---
@@ -223,7 +230,7 @@
 						- Blind SQL injection --> Obtain Admin password (flag4)
 						- RCE --> flag5 (Hint: `/code`)
 
-						Check out the purposefully shitty webapp by [@chemistrying](https://github.com/chemistrying):
+						Check out the purposefully terrible webapp by [@chemistrying](https://github.com/chemistrying):
 						https://github.com/chemistrying/cuhk-ctf-2024-web-demo
 						---
 						## Improving your `web` skills

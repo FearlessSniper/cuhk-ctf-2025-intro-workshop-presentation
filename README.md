@@ -1,3 +1,6 @@
+# CUHK CTF 2025 Presentation
+This repository contains the files used to make the presentation slides. The main presentation content is written in [index.html](index.html), and images used are also in the project root. Follow instructions from reveal.js to make the presentation.
+## Slides made with reveal.js
 <p align="center">
   <a href="https://revealjs.com">
   <img src="https://hakim-static.s3.amazonaws.com/reveal-js/logo/v1/reveal-black-text-sticker.png" alt="reveal.js" width="500">
